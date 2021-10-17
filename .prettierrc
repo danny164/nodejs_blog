@@ -23,5 +23,6 @@
                 "singleQuote": false
             }
         }
-    ]
+    ],
+    "files.associations": { "*.hbs": "html" }
 }
