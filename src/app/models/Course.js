@@ -19,3 +19,7 @@ const Course = new Schema(
 );
 
 module.exports = mongoose.model('Course', Course);
+// !!! mongoose.model('ModelName', mySchema);
+// ModelName: đây là tên sẽ lưu vào db, nó sẽ tự convert Course => courses
+// nếu chưa có nó sẽ tạo collection mới với tên courses
+// mySchema: tên schema mà mình định nghĩa ở phía trên
