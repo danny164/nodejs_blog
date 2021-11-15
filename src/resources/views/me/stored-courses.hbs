@@ -18,7 +18,7 @@
                     <td>{{this.createdAt}}</td>
                     <td>
                         <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                        <a href="" class="btn btn-link">Xóa</a>
+                        <a href="#" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-course-modal">Xóa</a>
                     </td>
                 </tr>
             {{/each}}
@@ -26,3 +26,60 @@
         </tbody>
     </table>
 </div>
+
+{{! Confirm Delete Modal }}
+
+<div
+    class="modal fade"
+    id="delete-course-modal"
+    tabindex="-1"
+    aria-labelledby="delete-course-modalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delete-course-modalLabel">Xóa khóa học</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn xóa khóa học này không?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btn-delete-course" class="btn btn-danger">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form name="delete-course-form" method="POST"></form>
+{{!-- <form method="POST" action="/courses/{{course._id}}?_method=DELETE"></form> --}}
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var courseId;
+        var deleteForm = document.forms['delete-course-form'];
+        var btnDelete = document.getElementById('btn-delete-course');
+
+        // get data-id={{this._id}} when modal showed -> save to courseId
+        $('#delete-course-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            courseId = button.data('id');
+
+        })
+
+        // injected action to hidden form and submit form
+        btnDelete.onclick = function () {
+            deleteForm.action = '/courses/' + courseId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+        
+    })
+</script>
