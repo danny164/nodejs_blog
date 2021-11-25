@@ -1,5 +1,13 @@
 <div class="mt-4">
-    <h3>Khóa học của tôi</h3>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h3>Khóa học của tôi</h3>
+            <a href="/me/trash/courses">Thùng rác
+                <span class="badge badge-pill badge-primary">{{deleteCount}}</span></a>
+        </div>
+        <a href="/courses/create" class="btn btn-primary">Thêm khóa học</a>
+
+    </div>
     <table class="table mt-4">
         <thead>
             <tr>
@@ -18,9 +26,21 @@
                     <td>{{this.createdAt}}</td>
                     <td>
                         <a href="/courses/{{this._id}}/edit" class="btn btn-link">Sửa</a>
-                        <a href="#" class="btn btn-link" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-course-modal">Xóa</a>
+                        <a
+                            href="#"
+                            class="btn btn-link"
+                            data-id="{{this._id}}"
+                            data-toggle="modal"
+                            data-target="#delete-course-modal"
+                        >Xóa</a>
                     </td>
                 </tr>
+            {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">Bạn chưa đăng khóa học nào.
+                        <a href="/courses/create">Đăng khóa học</a></td>
+                </tr>
+
             {{/each}}
 
         </tbody>
@@ -55,15 +75,12 @@
     </div>
 </div>
 
-{{!-- Delete hidden form --}}
 <form name="delete-course-form" method="POST"></form>
 {{!-- <form method="POST" action="/courses/{{course._id}}?_method=DELETE"></form> --}}
 
-
-
+{{! prettier-ignore }}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-
         var courseId;
         var deleteForm = document.forms['delete-course-form'];
         var btnDelete = document.getElementById('btn-delete-course');
@@ -72,7 +89,6 @@
         $('#delete-course-modal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             courseId = button.data('id');
-
         })
 
         // injected action to hidden form and submit form
